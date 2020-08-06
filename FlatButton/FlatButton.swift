@@ -10,14 +10,14 @@ import Cocoa
 import QuartzCore
 
 internal extension CALayer {
-    internal func animate(color: CGColor, keyPath: String, duration: Double) {
+    func animate(color: CGColor, keyPath: String, duration: Double) {
         if value(forKey: keyPath) as! CGColor? != color {
             let animation = CABasicAnimation(keyPath: keyPath)
             animation.toValue = color
             animation.fromValue = value(forKey: keyPath)
             animation.duration = duration
             animation.isRemovedOnCompletion = false
-            animation.fillMode = CAMediaTimingFillMode.forwards
+            animation.fillMode = kCAFillModeForwards
             add(animation, forKey: keyPath)
             setValue(color, forKey: keyPath)
         }
@@ -26,7 +26,7 @@ internal extension CALayer {
 
 //unused for now
 internal extension NSColor {
-    internal func tintedColor() -> NSColor {
+     func tintedColor() -> NSColor {
         var h = CGFloat(), s = CGFloat(), b = CGFloat(), a = CGFloat()
         let rgbColor = usingColorSpaceName(NSColorSpaceName.calibratedRGB)
         rgbColor?.getHue(&h, saturation: &s, brightness: &b, alpha: &a)
@@ -368,7 +368,7 @@ open class FlatButton: NSButton, CALayerDelegate {
         }
     }
     
-    open func layer(_ layer: CALayer, shouldInheritContentsScale newScale: CGFloat, from window: NSWindow) -> Bool {
+    open override func layer(_ layer: CALayer, shouldInheritContentsScale newScale: CGFloat, from window: NSWindow) -> Bool {
         return true
     }
     
